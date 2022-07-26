@@ -37,10 +37,34 @@ ostream & operator << (ostream & out , const Q & obj){
 	return out;
 }
 
-Q operator + (const Q & x, const Q & y){
-  Q res (x.num*y.den + x.den*y.num, x.den*y.den);
-  return res;
+
+struct Student {
+	string lname, fname;
+	int mat,phys,inf;
+  Student () {}
+	Student (string x, string y, int z, int d, int q){
+		lname =x;
+		fname = y;
+		mat = z;
+		phys =d;
+		inf = q;
+	}
+};
+
+ostream & operator << (ostream & out , const Student & obj){
+	out << obj.lname << ' '<< obj.fname;
+	//out << (obj.math + ... )/3.0;
+	return out;
 }
+
+istream & operator >> (istream & in , Student & obj){
+	string x,y;
+	int z,d,q;
+	in >> x>>y>>z>>d>>q;
+	obj = Student (x,y,z,d,q);
+	return in;
+}
+
 
 int main(){
 	Q x;
@@ -56,6 +80,8 @@ int main(){
 	cout << y<< endl;
 	cout << e<< endl;
 	cout << z<< endl;
-  cout<< x+z<<endl;
+  Student Vasya;
+  cin >> Vasya;
+  cout << Vasya;
 	return 0;
 }
