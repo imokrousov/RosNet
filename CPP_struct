@@ -1,0 +1,61 @@
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+struct Q {
+	int num;
+	unsigned int den;
+	Q () {
+		num = 0;
+		den = 1;
+	}
+	Q (int x){
+		num = x;
+		den = 1;
+	}
+	Q (int x, unsigned int y){
+		int g = gcd(abs(x),y);
+		num = x/g;
+		den = y/g;
+	}
+	Q (const Q & arg){
+		num = arg.num;
+		den = arg.den;
+	}
+	private:
+	int gcd (int x, int y){
+		if (x<y) swap (x,y);
+		if (x==y) return x;
+    if (x%y == 0) return y;
+		return gcd (y,x%y);
+	}
+};
+
+ostream & operator << (ostream & out , const Q & obj){
+	out<< obj.num << '/' << obj.den;
+	return out;
+}
+
+Q operator + (const Q & x, const Q & y){
+  Q res (x.num*y.den + x.den*y.num, x.den*y.den);
+  return res;
+}
+
+int main(){
+	Q x;
+	x.den = 3;
+	x.num = -2;
+	Q r(x) , t = x;
+	//
+	Q y (23) , e = 3;
+	Q z (1,2);
+	cout << x<< endl;
+	cout << r<< endl;
+	cout << t<< endl;
+	cout << y<< endl;
+	cout << e<< endl;
+	cout << z<< endl;
+  cout<< x+z<<endl;
+	return 0;
+}
