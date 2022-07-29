@@ -16,11 +16,11 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float D = b*b - 4.0*a*c;
     if (D>=0.0 )  
     {
-        fragColor = vec4(.2,.0,.0,1.0);
+        fragColor = vec4(.3,.0,.0,1.0);
         float t0 = (-b-sqrt(D))/(2.0*a);
         vec3 onSphere = t0*luch_zren;
         vec3 n = onSphere - sphere_center;
-        vec3 q = light_source - sphere_center;
+        vec3 q = light_source - onSphere;
         n = normalize(n);
         q = normalize(q);
         float diff = dot(n,q);
@@ -37,7 +37,22 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
         
         
     }
-    else fragColor = vec4(1.0,1.0,1.0,1.0);
-   
+    else {
+        
+        float h = -7.0;
+        float t1 = h/luch_zren.z;
+        if (t1>0.0) {
+            vec3 onPlate = t1*luch_zren;
+            vec3 n_pol = vec3 (.0 , .0, 1.0);
+            vec3 to_light = normalize ( light_source - onPlate);
+            float diff = dot (to_light , n_pol);
+            vec4 col_pol = vec4(.3 , .3 , .3, 1.0);
+            fragColor = col_pol;
+            if (diff > 0.0) {
+                fragColor += 1.3*diff * col_pol;
+            }
+        }
+        else fragColor = vec4(1.0,1.0,1.0,1.0);
+   }
   
 }
